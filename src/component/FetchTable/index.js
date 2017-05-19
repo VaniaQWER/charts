@@ -32,7 +32,6 @@ class FetchTable extends React.Component {
     this.setState({ loading: true });
     fetch(this.props.url,{
       method: 'post',
-      //mode: 'cors',
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json'
@@ -41,29 +40,21 @@ class FetchTable extends React.Component {
         pagesize: this.props.pageSize || 15,
         ...params,
       })
-      // body: querystring.stringify({
-      //   pagesize: this.props.pageSize || 15,
-      //   ...params,
-      // })
     }).then(res => res.json())
       .then((data) => {
-      if(!data.status){
-        message.error(data.msg);
-      }
       let pagination = this.state.pagination;
-      // Read total count from server
-      // pagination.total = data.totalCount;
-      pagination.total = data.result.records;
+      pagination.total = data.records;
       pagination.pageSize = this.props.pageSize || 15;
       if(!params.page) {
         pagination.current = 1;
       }
       if (typeof this.props.cb === 'function') {
-        this.props.cb(data.result.rows)
+        this.props.cb(data.rows)
       }
+      console.log('data:' + data);
       this.setState({
         loading: false,
-        data: data.result.rows,
+        data: data.rows,
         pagination,
       });
     }).catch(err => {

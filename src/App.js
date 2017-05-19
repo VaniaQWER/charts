@@ -32,41 +32,57 @@ class App extends Component {
   }
   /**生成报表 */
   report = (type) => {
-    // fetch('url')
-    // .then(res => res.json())
-    // .then(data => {
-    //<Chart title={} legend={} xAxis={} yAxis={} serise={}/>
-    //   Object.assign({}, option, data) 
-    // })
-
-    let Bar = require('./component/Bar').default;
-    const len = Bar.series[0].data.length;
-    let dataArr = [];
-    for (let i=0;i<len;i++) {
-      dataArr.push(this.state[type])
-    }
-    const baseLine = {
-      name:'基准线',
-      type:'line',
-      stack: '基准线',
-      data: dataArr
-    }
-    if (Bar.series[Bar.series.length-1].stack === '基准线') {
-      Bar.series[Bar.series.length-1] = baseLine;
+    let postData = {};
+    if (type === 'monthBase') {
+      postData = {
+        depts: this.state.monthDepts,
+        start: this.state.monthDate.startValue,
+        end: this.state.monthDate.endValue
+      }
     } else {
-      Bar.series[Bar.series.length] = baseLine;
+      postData = {
+        depts: this.state.yearDepts,
+        years: this.state.years
+      }
     }
-    Modal.info({
-      title: '统计报表',
-      width: 1000,
-      style: {top: 20 },
-      content: 
-        <ReactEcharts 
-          option={Bar} 
-          style={{height: '480px', width: '100%'}}  
-          className='react_for_echarts' 
-        />
-    });
+    fetch('/storm/material/consumableDivisionReport', {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(postData)
+    })
+    .then(res => res.json())
+    .then(data => {
+      const len = data.series[0].data.length;
+      let dataArr = [];
+      for (let i=0;i<len;i++) {
+        dataArr.push(this.state[type])
+      }
+      const baseLine = {
+        name:'基准线',
+        type:'line',
+        stack: '基准线',
+        data: dataArr
+      }
+      if (data.series[data.series.length-1].stack === '基准线') {
+        data.series[data.series.length-1] = baseLine;
+      } else {
+        data.series[data.series.length] = baseLine;
+      }
+      Modal.info({
+        title: '统计报表',
+        width: 1000,
+        style: {top: 20 },
+        content: 
+          <Chart 
+            title={data.title} 
+            legend={data.legend} 
+            xAxis={data.xAxis} 
+            yAxis={data.yAxis} 
+            serise={data.series}
+          />
+      });
+    })
   }
   //P1 查询
   monthSearch = () => {

@@ -31,7 +31,6 @@ export class Single extends React.Component {
             ref='table'
             columns={columns}
             url={'/storm/material/consumableDivision'}
-            rowKey=''
             />
       </Row>
     )
@@ -50,8 +49,7 @@ export class Multiple extends React.Component {
           query={this.props.query || null}
           ref='table'
           columns={columns}
-          url={'/storm/material/consumableDivision'}
-          rowKey=''
+          url={'/storm/material/findDivisionYearZB'}
         />
       </Row>
     )
