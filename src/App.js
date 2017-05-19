@@ -5,6 +5,7 @@ import { Layout, Menu, Row, Col, DatePicker, Button, Tabs, Select, Icon, Modal, 
 import AutoCompleteSelect from './component/AutoCompleteSelect';
 import MonthRange from './component/MonthRange';
 import { Single, Multiple} from './containers/charts';
+import Chart from './component/Chart';
 import moment from 'moment';
 const TabPane = Tabs.TabPane;
 const { Header, Footer, Sider, Content } = Layout;
@@ -34,10 +35,7 @@ class App extends Component {
     // fetch('url')
     // .then(res => res.json())
     // .then(data => {
-    //   let option = {
-    //     a: 1,
-    //     b: 2
-    //   };    
+    //<Chart title={} legend={} xAxis={} yAxis={} serise={}/>
     //   Object.assign({}, option, data) 
     // })
 

@@ -9,7 +9,7 @@ const option = {
         }
     },
     legend: {
-        data:['总金额', '金额', '占比']
+        data:['科室一', '科室二', '科室三']
     },
     grid: {
         left: '3%',
@@ -30,21 +30,21 @@ const option = {
     ],
     series : [
         {
-            name: '总金额',
+            name: '科室一',
             type: 'bar',
-            stack: '总金额',
+            stack: '科室一',
             data: [90, 84, 60]
         },
         {
-            name: '金额',
+            name: '科室二',
             type: 'bar',
-            stack: '金额',
+            stack: '科室二',
             data:[30, 15, 20]
         },
         {
-            name:'占比',
+            name:'科室三',
             type:'bar',
-            stack: '占比',
+            stack: '科室三',
             data:[33.33, 17.86, 33.33]
         }
     ]

@@ -4,42 +4,15 @@ import querystring from 'querystring';
 
 
 class Chart extends React.Component {
-  state = {
-    title: null,
-    legend: null,
-    xAxis: null,
-    yAxis: null,
-    series: []
-  }
-  fetchData = () => {
-    fetch(`${this.props.url}/sug?${str}`)
-      .then(response => response.json())
-      .then((d) => {
-        if (currentValue === value) {
-          const result = d.result;
-          const data = [];
-          result.forEach((r) => {
-            data.push({
-              value: r[0],
-              text: r[0],
-            });
-          });
-          //callback(data);
-        }
-      });
-  }
-  componentDidMount = () => {
-    this.fetchData();
-  }
   render() {
     return (
       <ReactEcharts 
         option={{
           title: {
-            text: this.state.title
+            text: this.props.title
           },
           legend: {
-            data: this.state.legend
+            data: this.props.legend
           },
           grid: {
             left: '3%',
@@ -50,12 +23,12 @@ class Chart extends React.Component {
           xAxis: {
             type: 'category',
             boundaryGap: false,
-            data: this.state.xAxis
+            data: this.props.xAxis
           },
           yAxis: {
-            data: this.state.yAxis
+            data: this.props.yAxis
           },
-          serise: this.state.serise
+          serise: this.props.serise
         }} 
         style={{height: '480px', width: '99%'}}  
         className='react_for_echarts' 
